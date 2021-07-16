@@ -7,7 +7,7 @@
 //
 //**********************************************************
 
-package lexoffice
+package golexoffice
 
 import (
 	"bytes"
