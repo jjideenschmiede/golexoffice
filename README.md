@@ -3,7 +3,7 @@
 ## Install
 
 ```console
-go get github.com/jojojonas/golexoffice
+go get github.com/jjideenschmiede/golexoffice
 ```
 
 ## How to use?
