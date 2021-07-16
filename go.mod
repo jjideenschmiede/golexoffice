@@ -1,3 +1,3 @@
-module github.com/jjideenschmiede/lexoffice
+module github.com/jjideenschmiede/golexoffice
 
 go 1.16
