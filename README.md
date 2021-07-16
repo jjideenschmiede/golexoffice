@@ -14,7 +14,7 @@ To get all contacts you can perform the following function.
 
 ```go
 // Get all contacts
-contacts, err := Contacts("token")
+contacts, err := golexware.Contacts("token")
 if err != nil {
     fmt.Println(err)
 } else {
@@ -28,7 +28,7 @@ To create a new contact, lexoffice needs some data. These must be entered in a s
 
 ```go
 // Define body
-body := &ContactBody{
+body := &golexware.ContactBody{
     "",
     0,
 	ContactBodyRoles{
@@ -83,7 +83,7 @@ body := &ContactBody{
 }
 
 // Create new contact
-contactReturn, err := AddContact(body, "token")
+contactReturn, err := golexware.AddContact(body, "token")
 if err != nil {
     fmt.Println(err)
 } else {
@@ -152,7 +152,7 @@ body := &ContactBody{
 }
 
 // Create new contact
-contactReturn, err := UpdateContact(body, "token")
+contactReturn, err := golexware.UpdateContact(body, "token")
 if err != nil {
     fmt.Println(err)
 } else {
