@@ -15,7 +15,7 @@ import (
 )
 
 const (
-	resourceUrl = "https://api.lexoffice.io"
+	baseURL = "https://api.lexoffice.io"
 )
 
 // Request is to define the request data
@@ -28,7 +28,7 @@ type Request struct {
 func (r *Request) Send() (*http.Response, error) {
 
 	// Set url
-	url := resourceUrl + r.Path
+	url := baseURL + r.Path
 
 	// Define client
 	client := &http.Client{}
