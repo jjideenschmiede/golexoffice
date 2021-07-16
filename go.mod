@@ -1,3 +1,3 @@
-module github.com/jojojonas/lexoffice
+module github.com/jjideenschmiede/lexoffice
 
 go 1.16
