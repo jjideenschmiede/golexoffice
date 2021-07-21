@@ -117,6 +117,37 @@ type InvoiceReturn struct {
 	Version     int    `json:"version"`
 }
 
+// Invoice is to get a invoice by id
+func Invoice(id, token string) (*InvoiceBody, error) {
+
+	// Set config for new request
+	r := Request{"/v1/invoices/" + id, "GET", token, nil}
+
+	// Send request
+	response, err := r.Send()
+	if err != nil {
+		return nil, err
+	}
+
+	// Close request
+	defer response.Body.Close()
+
+	read, err := io.ReadAll(response.Body)
+	fmt.Println(string(read))
+
+	// Decode data
+	var decode InvoiceBody
+
+	err = json.NewDecoder(response.Body).Decode(&decode)
+	if err != nil {
+		return nil, err
+	}
+
+	// Return data
+	return &decode, err
+
+}
+
 // AddInvoice is to create a invoice
 func AddInvoice(body *InvoiceBody, token string) (*InvoiceReturn, error) {
 
