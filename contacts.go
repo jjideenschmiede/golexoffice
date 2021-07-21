@@ -226,6 +226,34 @@ func Contacts(token string) (*ContactsReturn, error) {
 
 }
 
+// Contact is to get a contact by id
+func Contact(id, token string) (*ContactsReturnContent, error) {
+
+	// Set config for new request
+	r := Request{"/v1/contacts/" + id, "GET", token, nil}
+
+	// Send request
+	response, err := r.Send()
+	if err != nil {
+		return nil, err
+	}
+
+	// Close request
+	defer response.Body.Close()
+
+	// Decode data
+	var decode ContactsReturnContent
+
+	err = json.NewDecoder(response.Body).Decode(&decode)
+	if err != nil {
+		return nil, err
+	}
+
+	// Return data
+	return &decode, err
+
+}
+
 // AddContact is to add a new contact
 func AddContact(body *ContactBody, token string) (*ContactReturn, error) {
 
