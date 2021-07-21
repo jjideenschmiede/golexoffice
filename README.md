@@ -28,7 +28,7 @@ If you want to read out a specific contact, you can do this via the id (UUID).
 
 ```go
 // Get a contact by id
-contact, err := Contact("b324c2be-b745-4128-9ecd-e262a0a761cd", "token")
+contact, err := golexoffice.Contact("b324c2be-b745-4128-9ecd-e262a0a761cd", "token")
 if err != nil {
     fmt.Println(err)
 } else {
@@ -171,6 +171,20 @@ if err != nil {
     fmt.Println(err)
 } else {
     fmt.Println(contactReturn)
+}
+```
+    
+### Get a invoice
+
+If you want to read out a specific invoice, you can do this via the id (UUID).
+
+```go
+// Invoice is to get a invoice by id
+invoice, err := Invoice("0cf8142b-6f54-4c96-9766-6f44a9a4814b", "token")
+if err != nil {
+    fmt.Println(err)
+} else {
+    fmt.Println(invoice)
 }
 ```
 
