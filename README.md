@@ -22,6 +22,20 @@ fmt.Println(contacts)
 }
 ```
 
+### Get a contact by id
+
+If you want to read out a specific contact, you can do this via the id (UUID).
+
+```go
+// Get a contact by id
+contact, err := Contact("b324c2be-b745-4128-9ecd-e262a0a761cd", "token")
+if err != nil {
+    fmt.Println(err)
+} else {
+    fmt.Println(contact)
+}
+```
+
 ### Create a new contact
 
 To create a new contact, lexoffice needs some data. These must be entered in a structure.
