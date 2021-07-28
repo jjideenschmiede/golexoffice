@@ -121,10 +121,10 @@ type InvoiceReturn struct {
 func Invoice(id, token string) (*InvoiceBody, error) {
 
 	// Set config for new request
-	r := Request{"/v1/invoices/" + id, "GET", token, nil}
+	c := Config{"/v1/invoices/" + id, "GET", token, nil}
 
 	// Send request
-	response, err := r.Send()
+	response, err := c.Send()
 	if err != nil {
 		return nil, err
 	}
@@ -144,7 +144,7 @@ func Invoice(id, token string) (*InvoiceBody, error) {
 	}
 
 	// Return data
-	return &decode, err
+	return &decode, nil
 
 }
 
@@ -158,10 +158,10 @@ func AddInvoice(body *InvoiceBody, token string) (*InvoiceReturn, error) {
 	}
 
 	// Set config for new request
-	r := Request{"/v1/invoices", "POST", token, convert}
+	c := Config{"/v1/invoices", "POST", token, convert}
 
 	// Send request
-	response, err := r.Send()
+	response, err := c.Send()
 	if err != nil {
 		return nil, err
 	}
@@ -181,6 +181,6 @@ func AddInvoice(body *InvoiceBody, token string) (*InvoiceReturn, error) {
 	}
 
 	// Return data
-	return &decode, err
+	return &decode, nil
 
 }

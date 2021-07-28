@@ -202,10 +202,10 @@ type ContactReturn struct {
 func Contacts(token string) (*ContactsReturn, error) {
 
 	// Set config for new request
-	r := Request{"/v1/contacts/", "GET", token, nil}
+	c := Config{"/v1/contacts/", "GET", token, nil}
 
 	// Send request
-	response, err := r.Send()
+	response, err := c.Send()
 	if err != nil {
 		return nil, err
 	}
@@ -222,7 +222,7 @@ func Contacts(token string) (*ContactsReturn, error) {
 	}
 
 	// Return data
-	return &decode, err
+	return &decode, nil
 
 }
 
@@ -230,10 +230,10 @@ func Contacts(token string) (*ContactsReturn, error) {
 func Contact(id, token string) (*ContactsReturnContent, error) {
 
 	// Set config for new request
-	r := Request{"/v1/contacts/" + id, "GET", token, nil}
+	c := Config{"/v1/contacts/" + id, "GET", token, nil}
 
 	// Send request
-	response, err := r.Send()
+	response, err := c.Send()
 	if err != nil {
 		return nil, err
 	}
@@ -250,7 +250,7 @@ func Contact(id, token string) (*ContactsReturnContent, error) {
 	}
 
 	// Return data
-	return &decode, err
+	return &decode, nil
 
 }
 
@@ -264,10 +264,10 @@ func AddContact(body *ContactBody, token string) (*ContactReturn, error) {
 	}
 
 	// Set config for new request
-	r := Request{"/v1/contacts/", "POST", token, convert}
+	c := Config{"/v1/contacts/", "POST", token, convert}
 
 	// Send request
-	response, err := r.Send()
+	response, err := c.Send()
 	if err != nil {
 		return nil, err
 	}
@@ -284,7 +284,7 @@ func AddContact(body *ContactBody, token string) (*ContactReturn, error) {
 	}
 
 	// Return data
-	return &decode, err
+	return &decode, nil
 
 }
 
@@ -298,10 +298,10 @@ func UpdateContact(body *ContactBody, token string) (*ContactReturn, error) {
 	}
 
 	// Set config for new request
-	r := Request{"/v1/contacts/" + body.Id, "PUT", token, convert}
+	c := Config{"/v1/contacts/" + body.Id, "PUT", token, convert}
 
 	// Send request
-	response, err := r.Send()
+	response, err := c.Send()
 	if err != nil {
 		return nil, err
 	}
@@ -318,6 +318,6 @@ func UpdateContact(body *ContactBody, token string) (*ContactReturn, error) {
 	}
 
 	// Return data
-	return &decode, err
+	return &decode, nil
 
 }
