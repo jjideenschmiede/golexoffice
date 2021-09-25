@@ -42,7 +42,7 @@ To create a new contact, lexoffice needs some data. These must be entered in a s
 
 ```go
 // Define body
-body := &golexoffice.ContactBody{
+body := golexoffice.ContactBody{
     "",
     0,
 	golexoffice.ContactBodyRoles{
@@ -111,7 +111,7 @@ If you want to update a contact, then some information is very important. You ne
 
 ```go
 // Define body
-body := &golexoffice.ContactBody{
+body := golexoffice.ContactBody{
     "ID",
     1,
 	golexoffice.ContactBodyRoles{
@@ -198,7 +198,7 @@ For more information, please refer to the [documentation](https://developers.lex
 
 ```go
 // Define body
-body := &golexoffice.InvoiceBody{
+body := golexoffice.InvoiceBody{
     "",
     "",
     "",
@@ -276,5 +276,21 @@ if err != nil {
     fmt.Println(err)
 } else {
     fmt.Println(invoice)
+}
+```
+
+### Upload a file
+
+Here you will find a function with which you can upload a file to lexoffice. You only need the path to the file and the lexoffice token.
+
+For more information, please refer to the [documentation](https://developers.lexoffice.io/docs/#files-endpoint-upload-a-file).
+
+```go
+// Files is to create a new file
+files, err := AddFile("/Downloads/Rechnung 201912101300005.pdf", "token")
+if err != nil {
+    fmt.Println(err)
+} else {
+    fmt.Println(files)
 }
 ```
