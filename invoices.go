@@ -12,6 +12,7 @@
 package golexoffice
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -118,15 +119,15 @@ type InvoiceReturn struct {
 }
 
 // Invoice is to get a invoice by id
-func Invoice(id, token string) (*InvoiceBody, error) {
+func Invoice(id, token string) (InvoiceBody, error) {
 
 	// Set config for new request
-	c := Config{"/v1/invoices/" + id, "GET", token, nil}
+	c := Config{"/v1/invoices/" + id, "GET", token, "application/json", nil}
 
 	// Send request
 	response, err := c.Send()
 	if err != nil {
-		return nil, err
+		return InvoiceBody{}, err
 	}
 
 	// Close request
@@ -140,47 +141,44 @@ func Invoice(id, token string) (*InvoiceBody, error) {
 
 	err = json.NewDecoder(response.Body).Decode(&decode)
 	if err != nil {
-		return nil, err
+		return InvoiceBody{}, err
 	}
 
 	// Return data
-	return &decode, nil
+	return decode, nil
 
 }
 
 // AddInvoice is to create a invoice
-func AddInvoice(body *InvoiceBody, token string) (*InvoiceReturn, error) {
+func AddInvoice(body *InvoiceBody, token string) (InvoiceReturn, error) {
 
 	// Convert body
 	convert, err := json.Marshal(body)
 	if err != nil {
-		return nil, err
+		return InvoiceReturn{}, err
 	}
 
 	// Set config for new request
-	c := Config{"/v1/invoices", "POST", token, convert}
+	c := Config{"/v1/invoices", "POST", token, "application/json", bytes.NewBuffer(convert)}
 
 	// Send request
 	response, err := c.Send()
 	if err != nil {
-		return nil, err
+		return InvoiceReturn{}, err
 	}
 
 	// Close request
 	defer response.Body.Close()
-
-	read, err := io.ReadAll(response.Body)
-	fmt.Println(string(read))
 
 	// Decode data
 	var decode InvoiceReturn
 
 	err = json.NewDecoder(response.Body).Decode(&decode)
 	if err != nil {
-		return nil, err
+		return InvoiceReturn{}, err
 	}
 
 	// Return data
-	return &decode, nil
+	return decode, nil
 
 }

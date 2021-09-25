@@ -10,7 +10,7 @@
 package golexoffice
 
 import (
-	"bytes"
+	"io"
 	"net/http"
 )
 
@@ -21,11 +21,12 @@ const (
 // Config is to define the request data
 type Config struct {
 	Path, Method, Token string
-	Body                []byte
+	ContentType         string
+	Body                io.Reader
 }
 
 // Send is to send a new request
-func (c *Config) Send() (*http.Response, error) {
+func (c Config) Send() (*http.Response, error) {
 
 	// Set url
 	url := baseURL + c.Path
@@ -34,14 +35,14 @@ func (c *Config) Send() (*http.Response, error) {
 	client := &http.Client{}
 
 	// Request
-	request, err := http.NewRequest(c.Method, url, bytes.NewBuffer(c.Body))
+	request, err := http.NewRequest(c.Method, url, c.Body)
 	if err != nil {
 		return nil, err
 	}
 
 	// Define header
 	request.Header.Set("Authorization", "Bearer "+c.Token)
-	request.Header.Set("Content-Type", "application/json")
+	request.Header.Set("Content-Type", c.ContentType)
 	request.Header.Set("Accept", "application/json")
 
 	// Send request & get response

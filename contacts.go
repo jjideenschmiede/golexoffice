@@ -9,7 +9,10 @@
 
 package golexoffice
 
-import "encoding/json"
+import (
+	"bytes"
+	"encoding/json"
+)
 
 // ContactsReturn is to decode json data
 type ContactsReturn struct {
@@ -199,15 +202,15 @@ type ContactReturn struct {
 }
 
 // Contacts is to get a list of all contacts
-func Contacts(token string) (*ContactsReturn, error) {
+func Contacts(token string) (ContactsReturn, error) {
 
 	// Set config for new request
-	c := Config{"/v1/contacts/", "GET", token, nil}
+	c := Config{"/v1/contacts/", "GET", token, "application/json", nil}
 
 	// Send request
 	response, err := c.Send()
 	if err != nil {
-		return nil, err
+		return ContactsReturn{}, err
 	}
 
 	// Close request
@@ -218,24 +221,24 @@ func Contacts(token string) (*ContactsReturn, error) {
 
 	err = json.NewDecoder(response.Body).Decode(&decode)
 	if err != nil {
-		return nil, err
+		return ContactsReturn{}, err
 	}
 
 	// Return data
-	return &decode, nil
+	return decode, nil
 
 }
 
 // Contact is to get a contact by id
-func Contact(id, token string) (*ContactsReturnContent, error) {
+func Contact(id, token string) (ContactsReturnContent, error) {
 
 	// Set config for new request
-	c := Config{"/v1/contacts/" + id, "GET", token, nil}
+	c := Config{"/v1/contacts/" + id, "GET", token, "application/json", nil}
 
 	// Send request
 	response, err := c.Send()
 	if err != nil {
-		return nil, err
+		return ContactsReturnContent{}, err
 	}
 
 	// Close request
@@ -246,30 +249,30 @@ func Contact(id, token string) (*ContactsReturnContent, error) {
 
 	err = json.NewDecoder(response.Body).Decode(&decode)
 	if err != nil {
-		return nil, err
+		return ContactsReturnContent{}, err
 	}
 
 	// Return data
-	return &decode, nil
+	return decode, nil
 
 }
 
 // AddContact is to add a new contact
-func AddContact(body *ContactBody, token string) (*ContactReturn, error) {
+func AddContact(body ContactBody, token string) (ContactReturn, error) {
 
 	// Convert body
 	convert, err := json.Marshal(body)
 	if err != nil {
-		return nil, err
+		return ContactReturn{}, err
 	}
 
 	// Set config for new request
-	c := Config{"/v1/contacts/", "POST", token, convert}
+	c := Config{"/v1/contacts/", "POST", token, "application/json", bytes.NewBuffer(convert)}
 
 	// Send request
 	response, err := c.Send()
 	if err != nil {
-		return nil, err
+		return ContactReturn{}, err
 	}
 
 	// Close request
@@ -280,30 +283,30 @@ func AddContact(body *ContactBody, token string) (*ContactReturn, error) {
 
 	err = json.NewDecoder(response.Body).Decode(&decode)
 	if err != nil {
-		return nil, err
+		return ContactReturn{}, err
 	}
 
 	// Return data
-	return &decode, nil
+	return decode, nil
 
 }
 
 // UpdateContact is to add a new contact
-func UpdateContact(body *ContactBody, token string) (*ContactReturn, error) {
+func UpdateContact(body ContactBody, token string) (ContactReturn, error) {
 
 	// Convert body
 	convert, err := json.Marshal(body)
 	if err != nil {
-		return nil, err
+		return ContactReturn{}, err
 	}
 
 	// Set config for new request
-	c := Config{"/v1/contacts/" + body.Id, "PUT", token, convert}
+	c := Config{"/v1/contacts/" + body.Id, "PUT", token, "application/json", bytes.NewBuffer(convert)}
 
 	// Send request
 	response, err := c.Send()
 	if err != nil {
-		return nil, err
+		return ContactReturn{}, err
 	}
 
 	// Close request
@@ -314,10 +317,10 @@ func UpdateContact(body *ContactBody, token string) (*ContactReturn, error) {
 
 	err = json.NewDecoder(response.Body).Decode(&decode)
 	if err != nil {
-		return nil, err
+		return ContactReturn{}, err
 	}
 
 	// Return data
-	return &decode, nil
+	return decode, nil
 
 }
