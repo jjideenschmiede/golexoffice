@@ -286,8 +286,14 @@ Here you will find a function with which you can upload a file to lexoffice. You
 For more information, please refer to the [documentation](https://developers.lexoffice.io/docs/#files-endpoint-upload-a-file).
 
 ```go
+// Open file
+file, err := os.Open("/Users/jonaskwiedor/Downloads/Rechnung 201912101300005.pdf")
+if err != nil {
+    fmt.Println(err)
+}
+
 // Files is to create a new file
-files, err := AddFile("/Downloads/Rechnung 201912101300005.pdf", "token")
+files, err := AddFile(file, "Rechnung 201912101300005.pdf", "token")
 if err != nil {
     fmt.Println(err)
 } else {
