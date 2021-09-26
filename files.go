@@ -17,7 +17,6 @@ import (
 	"io"
 	"mime/multipart"
 	"os"
-	"path/filepath"
 )
 
 // FileReturn is to decode json data
@@ -26,7 +25,7 @@ type FileReturn struct {
 }
 
 // AddFile is to upload a file
-func AddFile(filePath string, token string) (FileReturn, error) {
+func AddFile(file *os.File, name string, token string) (FileReturn, error) {
 
 	// Create form data
 	body := &bytes.Buffer{}
@@ -34,17 +33,8 @@ func AddFile(filePath string, token string) (FileReturn, error) {
 	// Create writer
 	writer := multipart.NewWriter(body)
 
-	// Open file
-	file, err := os.Open(filePath)
-	if err != nil {
-		return FileReturn{}, err
-	}
-
-	// Close file after function ends
-	defer file.Close()
-
 	// Create body data
-	filePart, err := writer.CreateFormFile("file", filepath.Base(filePath))
+	filePart, err := writer.CreateFormFile("file", name)
 	if err != nil {
 		return FileReturn{}, err
 	}
