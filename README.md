@@ -293,7 +293,7 @@ if err != nil {
 }
 
 // Files is to create a new file
-files, err := AddFile(file, "Rechnung 201912101300005.pdf", "token")
+files, err := golexoffice.AddFile(file, "Rechnung 201912101300005.pdf", "token")
 if err != nil {
     fmt.Println(err)
 } else {
