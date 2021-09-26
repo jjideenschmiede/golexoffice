@@ -16,9 +16,9 @@ To get all contacts you can perform the following function.
 // Get all contacts
 contacts, err := golexoffice.Contacts("token")
 if err != nil {
-fmt.Println(err)
+    fmt.Println(err)
 } else {
-fmt.Println(contacts)
+    fmt.Println(contacts)
 }
 ```
 
