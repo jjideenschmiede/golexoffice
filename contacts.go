@@ -12,6 +12,7 @@ package golexoffice
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 )
 
 // ContactsReturn is to decode json data
@@ -202,30 +203,53 @@ type ContactReturn struct {
 }
 
 // Contacts is to get a list of all contacts
-func Contacts(token string) (ContactsReturn, error) {
+func Contacts(token string) ([]ContactsReturnContent, error) {
 
-	// Set config for new request
-	c := Config{"/v1/contacts/", "GET", token, "application/json", nil}
+	// To save the contact data
+	var contacts []ContactsReturnContent
 
-	// Send request
-	response, err := c.Send()
-	if err != nil {
-		return ContactsReturn{}, err
-	}
+	// To call the page
+	page := 0
 
-	// Close request
-	defer response.Body.Close()
+	// Loop over all sites
+	for {
 
-	// Decode data
-	var decode ContactsReturn
+		// Set config for new request
+		c := Config{fmt.Sprintf("/v1/contacts?page=%d", page), "GET", token, "application/json", nil}
 
-	err = json.NewDecoder(response.Body).Decode(&decode)
-	if err != nil {
-		return ContactsReturn{}, err
+		// Send request
+		response, err := c.Send()
+		if err != nil {
+			return nil, err
+		}
+
+		// Decode data
+		var decode ContactsReturn
+
+		err = json.NewDecoder(response.Body).Decode(&decode)
+		if err != nil {
+			return nil, err
+		}
+
+		// Close request
+		response.Body.Close()
+
+		// Add contacts
+		for _, value := range decode.Content {
+			contacts = append(contacts, value)
+		}
+
+		// Check length & break the loop
+		if decode.TotalPages == page {
+			break
+		} else {
+			page++
+		}
+
 	}
 
 	// Return data
-	return decode, nil
+	return contacts, nil
 
 }
 
