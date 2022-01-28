@@ -57,7 +57,7 @@ type InvoiceBodyLineItems struct {
 	Type               string               `json:"type"`
 	Name               string               `json:"name"`
 	Description        string               `json:"description"`
-	Quantity           int                  `json:"quantity"`
+	Quantity           float64              `json:"quantity"`
 	UnitName           string               `json:"unitName"`
 	UnitPrice          InvoiceBodyUnitPrice `json:"unitPrice"`
 	DiscountPercentage int                  `json:"discountPercentage"`
@@ -150,7 +150,7 @@ func Invoice(id, token string) (InvoiceBody, error) {
 }
 
 // AddInvoice is to create a invoice
-func AddInvoice(body *InvoiceBody, token string) (InvoiceReturn, error) {
+func AddInvoice(body InvoiceBody, token string) (InvoiceReturn, error) {
 
 	// Convert body
 	convert, err := json.Marshal(body)
