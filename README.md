@@ -128,7 +128,7 @@ body := golexoffice.ContactBody{
             "Jonas",
             "Kwiedor",
             "jonas.kwiedor@jj-ideenschmiede.de",
-            "017684714777",
+            "012345678999",
         }},
     },
     golexoffice.ContactBodyAddresses{
